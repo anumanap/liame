@@ -96,7 +96,6 @@ BOARD_XIAOMI_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext vendor produ
 BOARD_XIAOMI_DYNAMIC_PARTITIONS_SIZE := 7327449088 # TODO: Fix hardcoded value
 BOARD_USES_METADATA_PARTITION := true
 BOARD_ROOT_EXTRA_FOLDERS := metadata
-TW_INCLUDE_NTFS_3G := true
 
 # Dynamic Partition handling flags
 IGNORE_UPDATE_LOGICAL_PARTITION_ERROR := true # Makes twrp ignore "unable to update logical partition" error
@@ -128,11 +127,17 @@ BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 
+# Additional binaries & libraries needed for recovery
+TARGET_RECOVERY_DEVICE_MODULES += \
+    libkeymaster4 \
+    libkeymaster41 \
+    libpuresoftkeymasterdevice
+
 # Decryption
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
-TW_FIX_DECRYPTION_ON_DATA_MEDIA := true
+TW_PREPARE_DATA_MEDIA_EARLY := true
 
 # Hack: prevent anti rollback
 PLATFORM_SECURITY_PATCH := 2099-12-31
@@ -140,31 +145,33 @@ VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 99.87.36
 PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 
-# TWRP Configuration
+# Display
 TW_BRIGHTNESS_PATH := "/sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2047
 TW_DEFAULT_BRIGHTNESS := 205
+
+TW_INCLUDE_RESETPROP := true
+TW_INCLUDE_REPACKTOOLS := true
+
+# TWRP Configuration 
+TW_FRAMERATE := 60
 TW_THEME := portrait_hdpi
+TW_INCLUDE_NTFS_3G := true
+TW_INCLUDE_FUSE_EXFAT := true
+TW_INCLUDE_FUSE_NTFS  := true
 TW_EXTRA_LANGUAGES := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_USE_TOOLBOX := true
-TW_EXCLUDE_DEFAULT_USB_INIT := true
-#TW_Y_OFFSET := 80
-#TW_H_OFFSET := -80
-TWRP_INCLUDE_LOGCAT := true
-TARGET_USES_LOGD := true 
+TW_USE_TOOLBOX := true 
 TARGET_USES_MKE2FS := true
 TW_EXCLUDE_TWRPAPP := true
-#TW_SKIP_COMPATIBILITY_CHECK := true
-TW_INCLUDE_REPACKTOOLS := true
-#TW_NO_SCREEN_TIMEOUT := true
 TW_INCLUDE_FB2PNG := true
-TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_FASTBOOTD := true
 TW_INCLUDE_PYTHON := true
 TW_LOAD_VENDOR_MODULES := true
-TW_FRAMERATE := 60
+
+# USB
+TW_EXCLUDE_DEFAULT_USB_INIT := true
 
 # System as root
 BOARD_SUPPRESS_SECURE_ERASE := true
@@ -183,9 +190,7 @@ TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 # Recovery
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
-# Additional binaries & libraries needed for recovery
-TARGET_RECOVERY_DEVICE_MODULES += \
-    libkeymaster4 \
-    libkeymaster41 \
-    libpuresoftkeymasterdevice
+# Log
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true
 
