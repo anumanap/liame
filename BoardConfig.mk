@@ -36,11 +36,6 @@ TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
 TARGET_BOARD_SUFFIX := _64
 TARGET_USES_64_BIT_BINDER := true
 
-#MIUI 12.xx A11 DECRYPTION
-BOARD_AVB_RECOVERY_ADD_HASH_FOOTER_ARGS += \
-    --prop com.android.build.boot.os_version:$(PLATFORM_VERSION) \
-    --prop com.android.build.boot.security_patch:$(PLATFORM_SECURITY_PATCH)
-
 # APEX
 DEXPREOPT_GENERATE_APEX_IMAGE := true
 
