@@ -68,3 +68,6 @@ on property:twrp.all.users.decrypted=true
     stop teei_daemon
     stop keymaster-4-0
     stop gatekeeper-1-0
+
+on boot
+    start health-hal-2-1
